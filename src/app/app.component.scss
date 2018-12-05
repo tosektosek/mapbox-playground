@@ -1,0 +1,12 @@
+mgl-map {
+  height: 100%;
+  width: 100%;
+}
+
+.marker {
+    cursor: pointer;
+    height: 30px;
+    width:30px;
+    background-image: url('../assets/map-marker.png');
+    background-size: cover;
+}
