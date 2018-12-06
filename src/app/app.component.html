@@ -1,14 +1,42 @@
 <mgl-map
-(click)="addMarker($event)"
+  #map
+  (zoomEnd)="zoomEnd($event)"
+  (click)="addMarker($event)"
   [style]="'mapbox://styles/mapbox/streets-v9'"
-  [zoom]="[9]"
-  [center]="[-74.50, 40]">
-  <ng-container *ngFor="let marker of markers; let i = index">
-    <mgl-marker #MyMarker [lngLat]="marker.lngLat">
-        <div class="marker"></div>
-    </mgl-marker>
-    <mgl-popup [marker]="MyMarker" [closeOnClick]="true">
-        <h1>Hello world !{{i}}</h1>
-    </mgl-popup>
-  </ng-container>
+  [zoom]="[zoom]"
+  [center]="center">
+  <mgl-marker-cluster
+    *ngIf="data"
+    [data]="data"
+    [maxZoom]="14"
+    [radius]="50"
+    (load)="initSuperCluster($event)">
+    <ng-template
+      mglPoint
+      let-feature>
+      <div
+        (click)="handleMarkerClick($event, feature)"
+        class="marker"
+        [title]="feature.properties['city']">
+        {{ feature.properties['state'] }}
+      </div>
+      <mgl-popup
+      *ngIf="selectedMarker"
+        [feature]="selectedMarker"
+        [closeOnClick]="true">
+        <h1>Hello world !</h1>
+      </mgl-popup>
+    </ng-template>
+    <ng-template
+      mglClusterPoint
+      let-feature>
+      <div
+        (click)="clusterClicked(feature.geometry.coordinates)"
+        class="marker-cluster">
+        {{
+                feature.properties?.point_count }}
+      </div>
+    </ng-template>
+  </mgl-marker-cluster>
+
 </mgl-map>
