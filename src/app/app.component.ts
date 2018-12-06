@@ -271,10 +271,10 @@ let d = {
 })
 export class AppComponent implements OnInit {
   @ViewChild('map') map: MapComponent;
+  @ViewChild('geolocateControl') geolocateControl;
   zoom = 4;
   center = [
-    -77.034084142948,
-    38.909671288923
+    21.23400, 52.21890
   ];
   data;
   markers = [];
@@ -282,6 +282,10 @@ export class AppComponent implements OnInit {
   selectedMarker: any;
   ngOnInit() {
     this.data = d;
+    setTimeout(() => {
+     const button = document.getElementsByClassName('mapboxgl-ctrl-icon mapboxgl-ctrl-geolocate')[0] as any;
+      button.click();
+    });
   }
 
   initSuperCluster(event) {
